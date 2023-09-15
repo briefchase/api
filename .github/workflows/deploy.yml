@@ -28,7 +28,6 @@ jobs:
 
     - name: Build and Up Docker Compose
       run: |
-        pwd
-        ls -a
+        sudo service docker restart
         docker-compose -f docker-compose.yml build
         docker-compose -f docker-compose.yml up -d
