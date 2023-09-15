@@ -28,7 +28,5 @@ jobs:
 
     - name: Build and Up Docker Compose
       run: |
-        sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-        sudo service docker restart
-        docker-compose -f docker-compose.yml build
-        docker-compose -f docker-compose.yml up -d
+        sudo docker-compose -f docker-compose.yml build
+        sudo docker-compose -f docker-compose.yml up -d
