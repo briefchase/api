@@ -1,4 +1,4 @@
-name: Deploy Docker Compose
+name: Install & Compose Up
 
 on:
   push:

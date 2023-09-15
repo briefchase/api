@@ -1,0 +1,8 @@
+version: '3.1'
+
+services:
+  python-app:
+    image: python-docker
+    ports:
+      - "5000:5000"
+    restart: always
