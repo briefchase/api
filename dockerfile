@@ -1,5 +1,5 @@
 # Use the lightweight version of the official Python image
-FROM python:3.9-alpine
+FROM python:3.12-rc-bookworm
 
 # Set the working directory
 WORKDIR /usr/src/app
