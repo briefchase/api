@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   web:
     image: nginx
@@ -25,7 +27,7 @@ services:
     volumes:
       - ./flask:/src
     depends_on:
-      -  elastic
+      - elastic
     networks:
       - homenet
 
@@ -36,3 +38,6 @@ services:
       - discovery.type=single-node
     networks:
       - homenet
+
+networks:
+  homenet:
