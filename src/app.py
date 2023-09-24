@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('interface/index.html')
+    return "fish"#render_template('interface/index.html')
 
 @app.route('/query', methods=['GET'])
 def query():
