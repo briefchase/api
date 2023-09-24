@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Text Box</title>
+    <style>
+        .input_container {
+            position: relative;
+            width: 100%;
+            /* border: 1px solid #000; DEBUG (Delete) */
+            padding: 8px; /* You can adjust this value to your preference */
+        }
+        .input_display {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: left;
+            justify-content: left;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .hidden_textbox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* Make the text box invisible */
+        }
+        @keyframes blink {0%, 49% {opacity: 1;}50%, 100% {opacity: 0;}}
+        #cursor_content {
+            font-weight: bold;
+            animation: blink 1s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="response"></div>
+    <div class="input_container">
+        <div class="input_display">
+            <span id="input_content"></span><span id="cursor_content">_</span>
+        </div>
+        <input type="text" class="hidden_textbox" id="input_textbox">
+    </div>
+
+    <script>
+        // Get references to the span and hidden text box
+        const responsediv = document.getElementById('response');
+        const inputcontent = document.getElementById('input_content');
+        const cursorcontent = document.getElementById('cursor_content');
+        const hiddentextbox = document.getElementById('input_textbox');
+
+        function respond(text) {
+            // Clear the div of any existing text.
+            responsediv.innerHTML = '';
+            // Start animating the text.
+            const letters = text.split('');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    responsediv.innerHTML = `${responsediv.innerHTML.slice(0, index)}${letter}${responsediv.innerHTML.slice(index + 1)}`;
+                }, index * 100);
+            });
+        }
+
+        // Add an event listener to the hidden text box for input changes
+        hiddentextbox.addEventListener('input', function () {
+            // Update the content of the span with the text box value
+            inputcontent.textContent = hiddentextbox.value;
+            cursorcontent.textContent = ' '.repeat(hiddentextbox.value.length) + "_";
+        });
+
+        hiddentextbox.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                hiddentextbox.value = '';
+                inputcontent.textContent = '';
+                cursorcontent.textContent = '_';
+                // Get the value from the input field
+                const queryValue = inputField.value;
+                // Create the URL with the query parameters
+                const url = new URL('http://0.0.0.0:0000/query');
+                url.searchParams.append('key', queryValue);
+                // Send a GET request to the server
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        // Update the content of the responseDiv with the returned message
+                        respond(data.message);
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+        });
+    </script>
+</body>
+</html>

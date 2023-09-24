@@ -1,0 +1,74 @@
+<div id="response"></div>
+<div id="textbox-container">
+  <div id="cursor-container">
+    <span id="cursor">_</span>
+  </div>
+  <div id="textbox" contenteditable="true"></div>
+</div>
+
+<style>
+  
+#textbox-container {
+  position: relative;
+  width: 200px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
+}
+#cursor-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#cursor {
+  z-index: 1; /* Ensure the cursor is above the textbox */
+  animation: blink 1s infinite step-start;
+}
+#textbox {
+  width: 100%; /* Make the textbox fill the container */
+  height: 100%; /* Make the textbox fill the container */
+  background-color: transparent; /* Make the background transparent to see the cursor */
+  border: none; /* Remove any borders */
+  outline: none; /* Remove the default focus outline */
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
+
+
+<script>
+const textbox = document.getElementById('textbox');
+const regex = /^[a-zA-Z0-9!@#$%^&*()_+{}|\\~-]+\s*$/;
+
+function respond(text) {
+  // Get the div element.
+  const div = document.getElementById('response');
+  // Clear the div of any existing text.
+  div.innerHTML = '';
+  // Start animating the text.
+  const letters = text.split('');
+  letters.forEach((letter, index) => {
+    setTimeout(() => {
+      div.innerHTML = `${div.innerHTML.slice(0, index)}${letter}${div.innerHTML.slice(index + 1)}`;
+    }, index * 100);
+  });
+}
+// Capture key events on the webpage
+document.addEventListener('keydown', (event) => {
+  // Get the key that was pressed
+  const key = event.key;
+  switch (key) {
+    case 'Backspace':
+      textbox.textContent = textbox.textContent.substring(0, textbox.textContent.length - 1);
+      break;
+    case 'Enter':
+      respond(textbox.textContent);
+      textbox.textContent = '';
+      break;
+    default:
+      if (regex.test(key) && key.length == 1) textbox.textContent += key;
+      break;
+  }
+});
+</script>
