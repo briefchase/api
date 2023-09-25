@@ -10,8 +10,6 @@ services:
     volumes:
       - ./traefik:/etc/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - homenet
 
   backend:
     build:
@@ -29,8 +27,3 @@ services:
       - 'traefik.http.routers.my-app.tls=true'
       - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
       - 'traefik.http.services.my-app.loadbalancer.server.port=9091'
-    networks:
-      - homenet
-
-networks:
-  homenet:
