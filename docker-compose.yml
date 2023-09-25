@@ -28,6 +28,7 @@ services:
       - 'traefik.http.routers.my-app.rule=Host(`104.197.143.101`)'
       - 'traefik.http.routers.my-app.tls=true'
       - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
+      - 'traefik.http.services.my-app.loadbalancer.server.port=9091'
     networks:
       - homenet
 
