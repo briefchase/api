@@ -9,17 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #return render_template('index.html')
-    return """
-    <html>
-        <head>
-            <title>Test Page</title>
-        </head>
-        <body>
-            <h1>Hello, World!</h1>
-        </body>
-    </html>
-    """
+    return render_template('index.html')
 
 #@app.route('/query', methods=['GET'])
 #def query():
