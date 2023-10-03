@@ -13,18 +13,8 @@ cors = CORS(app, resources={r"/query": {"origins": "*"}})  # This will allow all
 def index():
     return render_template('index.html')
 
-@app.route('/query', methods=['GET'])
+@app.route('/query')
 def query():
-    # #Access query parameters from the URL
-    # query_parameters = request.args
-    # # Convert the ImmutableMultiDict to a regular dictionary
-    # json_data = query_parameters.to_dict()
-    # # Optionally, convert the dictionary to a JSON string
-    # json_string = json.dumps(json_data)
-    # message = json_string
-    # messages.append({"role": "user", "content": message},)
-    # completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages = messages)
-    # reply = completion.choices[0].message.content
     return jsonify(message="hi")
 
 if __name__ == '__main__':
