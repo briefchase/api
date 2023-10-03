@@ -17,8 +17,6 @@ services:
     stop_signal: SIGINT
     environment:
       - FLASK_SERVER_PORT=9091
-    ports:
-      - '443:9091'
     volumes:
       - ./src:/src
     labels:
