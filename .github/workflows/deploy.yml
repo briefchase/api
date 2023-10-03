@@ -17,17 +17,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install Docker
+    - name: Install Docker (if not present)
       run: |
-        (docker --version &>/dev/null && sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq) && sudo docker system prune -a --volumes --force) || echo "Docker is not installed"
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sudo sh get-docker.sh
+        if ! command -v docker &>/dev/null; then
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+        fi
 
     - name: Install Docker Compose
       run: |
-        sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+        sudo curl -SL "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
-
 
     - name: Build and Up Docker Compose
       run: |
