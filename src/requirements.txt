@@ -1,4 +1,5 @@
 flask
+Flask-CORS
 openai
 aiohttp==3.8.2
 yarl==1.8.1
