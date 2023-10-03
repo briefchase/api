@@ -7,7 +7,6 @@ import openai
 #messages = [ {"role": "system", "content": "You are a bash terminal you must respond only as a bash terminal would:\n"} ]
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/query": {"origins": "*"}})  # This will allow all origins to make requests
 
 @app.route('/')
 def index():
