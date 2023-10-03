@@ -94,7 +94,13 @@
                 
                 const url = new URL('http://104.197.143.101/query');
                 url.searchParams.append('key', input);
-                fetch(url)
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                })
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
