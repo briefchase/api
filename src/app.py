@@ -15,7 +15,12 @@ def index():
 
 @app.route('/query')
 def query():
-    return jsonify(message="hi")
+    response = jsonify(message="hi")
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
