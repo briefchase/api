@@ -23,7 +23,7 @@ def query():
     # messages.append({"role": "user", "content": message},)
     # completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages = messages)
     # reply = completion.choices[0].message.content
-    return jsonify(message="hi")
+    return "hi"#jsonify(message="hi")
 
 if __name__ == '__main__':
     app.run(debug=True)
