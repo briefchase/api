@@ -17,9 +17,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install Docker (if not present)
+    - name: Stop any running Docker containers and Install Docker (if not present)
       run: |
-        if ! command -v docker &>/dev/null; then
+        if command -v docker &>/dev/null; then
+          sudo docker stop $(sudo docker ps -aq) || echo "No containers to stop"
+        else
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
         fi
