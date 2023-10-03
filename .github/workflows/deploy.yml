@@ -19,7 +19,7 @@ jobs:
 
     - name: Install Docker
       run: |
-        sudo (docker --version &>/dev/null && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker system prune -a --volumes --force) || echo "Docker is not installed"
+        (docker --version &>/dev/null && sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq) && sudo docker system prune -a --volumes --force) || echo "Docker is not installed"
         curl -fsSL https://get.docker.com -o get-docker.sh
         sudo sh get-docker.sh
 
