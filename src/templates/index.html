@@ -80,7 +80,7 @@
 
         async function ask(input) {
             try {
-                const url = new URL('http://104.197.143.101/query');
+                const url = new URL('https://104.197.143.101/query');
                 const response = await fetch(url);
                 const data = await response.json();
                 respond(data.message);
