@@ -81,7 +81,7 @@
                 // Get the value from the input field
                 const queryValue = inputField.value;
                 // Create the URL with the query parameters
-                const url = new URL('http://104.197.143.101:9091/query');
+                const url = new URL('http://104.197.143.101/query');
                 url.searchParams.append('key', queryValue);
                 // Send a GET request to the server
                 fetch(url)
