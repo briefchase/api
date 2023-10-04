@@ -55,8 +55,7 @@ jobs:
     - name: Build and Up Docker Compose
       run: |
         sudo chmod 600 traefik/acme.json
-        pwd
-        sudo sh ./config/templating.sh config.json ../docker-compose.yml
+        sudo ./config/templating.sh config.json ../docker-compose.yml
         sudo docker-compose -f docker-compose.yml build
         sudo docker-compose -f docker-compose.yml up --profile listener -d
 
