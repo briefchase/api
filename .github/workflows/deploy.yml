@@ -47,6 +47,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y jq
 
+    - name: Verify jq installation
+      run: |
+        which jq
+        jq --version
+
     - name: Build and Up Docker Compose
       run: |
         sudo chmod 600 traefik/acme.json
