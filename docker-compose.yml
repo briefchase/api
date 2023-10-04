@@ -27,7 +27,7 @@ services:
       - listener
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_IP}`)'
+      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_URL}`)'
       - 'traefik.http.routers.my-app.tls=true'
       - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
       - 'traefik.http.services.my-app.loadbalancer.server.port=9091'
@@ -46,7 +46,7 @@ services:
       - server
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_IP}`)'
+      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_URL}`)'
       - 'traefik.http.routers.my-app.tls=true'
       - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
       - 'traefik.http.services.my-app.loadbalancer.server.port=9091'
