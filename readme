@@ -1,0 +1,5 @@
+Configuration:
+ - cp config.template.json config.json
+ - modify config.json
+ - chmod +x send_config.sh
+ - ./send_config.sh

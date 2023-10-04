@@ -1,5 +1,5 @@
 # Use the lightweight version of the official Python image
-FROM python:3.10-slim-bullseye
+FROM python:3.10-bookworm
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -11,21 +11,22 @@ COPY . .
 RUN if [ ! -d "/venv" ]; then python -m venv /venv; fi
 ENV PATH="/venv/bin:$PATH"
 
-# Update pip and Install the required packages within the virtual environment
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Update pip and Install the required packages
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Make sure templating.sh is executable
-RUN chmod +x templating.sh
+# Install jq for JSON parsing
+RUN apt-get update && apt-get install -y jq
+
+# Make sure listener.sh is executable
+RUN chmod +x listener.sh
 
 # Make port 9091 available to the world outside this container
 EXPOSE 9091
 
 # Set the environment variable
-ENV FLASK_APP=app.py
+ENV FLASK_APP=listener.py
 
 # Run Flask directly after parsing LOCAL_HOST and INTERNAL_PORT from the JSON file
-CMD ./templating.sh && \
-    LOCAL_HOST=$(jq -r '.LOCAL_HOST' config.json) && \
-    INTERNAL_PORT=$(jq -r '.INTERNAL_PORT' config.json) && \
-    flask run --host=$LOCAL_HOST --port=9091
+CMD LOCAL_HOST=$(jq -r '.LOCAL_HOST' config.template.json) && \
+    INTERNAL_PORT=$(jq -r '.INTERNAL_PORT' config.template.json) && \
+    flask run --host=$LOCAL_HOST --port=$INTERNAL_PORT

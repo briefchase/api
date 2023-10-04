@@ -13,4 +13,4 @@
   [http.services.noop]
     [http.services.noop.loadBalancer]
       [[http.services.noop.loadBalancer.servers]]
-        url = "http://104.197.143.101"
+        url = "{EXTERNAL_URL}"
