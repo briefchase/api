@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Check for jq
-if ! command -v jq &> /dev/null
-then
+if ! type jq > /dev/null 2>&1; then
     echo "This script requires 'jq' for JSON parsing. Please install it."
     exit 1
 fi
