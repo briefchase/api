@@ -19,9 +19,9 @@ TARGET_PATH="$2"
 process_file() {
     local file="$1"
     
-    while read -r key value; do
+    while IFS=" " read -r key value; do
         # Use sed to replace
-        sed -i "s/{${key}}/${value}/g" "$file"
+        sed -i "s/\{${key}\}/${value}/g" "$file"
     done < <(jq -r 'to_entries[] | "\(.key) \(.value)"' "$CONFIG_FILE")
 }
 
