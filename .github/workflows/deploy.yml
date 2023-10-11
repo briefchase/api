@@ -41,42 +41,10 @@ jobs:
       run: |
         sudo curl -SL "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
-    
-    - name: Install jq (JSON Processor)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y jq
-
-    - name: Verify jq installation
-      run: |
-        which jq
-        jq --version
 
     - name: Build and Up Docker Compose
       run: |
         sudo chmod 600 traefik/acme.json
-        sudo chmod +x ./config/templating.sh
-        sudo ./config/templating.sh ./config/config.template.json ./docker-compose.yml
         cat ./docker-compose.yml
         sudo docker-compose -f docker-compose.yml build
-        sudo docker-compose -f docker-compose.yml up --profile listener -d
-
-    - name: Wait for config.json to appear in volume
-      run: |
-        # Get the name of the volume related to our project's 'config' volume
-        VOLUME_NAME=$(sudo docker volume ls | grep "_config$" | awk '{print $2}')
-        
-        # Construct the path
-        VOLUME_PATH="/var/lib/docker/volumes/${VOLUME_NAME}/_data"
-        
-        # Wait for the file to appear
-        while [ ! -f "${VOLUME_PATH}/config.json" ]; do
-          echo "Waiting for config.json to appear in the volume..."
-          sleep 10 # Wait for 10 seconds before checking again
-        done
-        echo "config.json found in the volume!"
-
-    - name: Compose Down and Up again
-      run: |
-        sudo docker-compose -f docker-compose.yml down
-        sudo docker-compose -f docker-compose.yml up --profile server -d
+        sudo docker-compose -f docker-compose.yml up -d
