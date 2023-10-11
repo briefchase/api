@@ -45,6 +45,5 @@ jobs:
     - name: Build and Up Docker Compose
       run: |
         sudo chmod 600 traefik/acme.json
-        cat ./docker-compose.yml
         sudo docker-compose -f docker-compose.yml build
         sudo docker-compose -f docker-compose.yml up -d

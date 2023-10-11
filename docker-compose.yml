@@ -13,7 +13,7 @@ services:
 
   server:
     build:
-      context: ./src
+      context: .
     stop_signal: SIGINT
     environment:
       - FLASK_SERVER_PORT=9091
