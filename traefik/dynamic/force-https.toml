@@ -13,4 +13,4 @@
   [http.services.noop]
     [http.services.noop.loadBalancer]
       [[http.services.noop.loadBalancer.servers]]
-        url = "{EXTERNAL_URL}"
+        url = "${EXTERNAL_URL}"

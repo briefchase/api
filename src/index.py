@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import json
-
 import openai
 
 #openai.my_api_key = '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'
