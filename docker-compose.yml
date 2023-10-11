@@ -7,46 +7,24 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    profiles:
-      - listener
-      - server
     volumes:
       - ./traefik:/etc/traefik
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  
-  configlistener:
-    build:
-      context: ./config
-    stop_signal: SIGINT
-    environment:
-      - FLASK_SERVER_PORT=9091
-    volumes:
-      - config:/config
-      - venv:/venv
-    profiles:
-      - listener
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_URL}`)'
-      - 'traefik.http.routers.my-app.tls=true'
-      - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
-      - 'traefik.http.services.my-app.loadbalancer.server.port=9091'
 
-  backend:
+  server:
     build:
       context: ./src
     stop_signal: SIGINT
     environment:
       - FLASK_SERVER_PORT=9091
     volumes:
-      - src:/src
       - config:/config
       - venv:/venv
-    profiles:
-      - server
+    env_file:
+      - ./.env
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.my-app.rule=Host(`{EXTERNAL_URL}`)'
+      - 'traefik.http.routers.my-app.rule=Host(`${EXTERNAL_URL}`)'
       - 'traefik.http.routers.my-app.tls=true'
       - 'traefik.http.routers.my-app.tls.certresolver=lets-encrypt'
       - 'traefik.http.services.my-app.loadbalancer.server.port=9091'

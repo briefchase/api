@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Extract EXTERNAL_URL from config.json
-EXTERNAL_URL=$(jq -r '.EXTERNAL_URL' config.json)
+# Extract EXTERNAL_URL from file
+EXTERNAL_URL=$(jq -r '.EXTERNAL_URL' .env)
 
 # Send config.json via HTTPS POST to the extracted URL
 curl -X POST -H "Content-Type: application/json" -d @config.json $EXTERNAL_URL
