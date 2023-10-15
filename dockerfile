@@ -8,6 +8,8 @@ COPY . .
 RUN if [ ! -d "/venv" ]; then python -m venv /venv; fi
 # Add the virtual environment bin to PATH
 ENV PATH="/venv/bin:$PATH"
+# Add the flask app index to env
+ENV FLASK_APP=index.py
 # Upgrade pip and install required Python packages
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r src/requirements.txt
