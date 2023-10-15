@@ -19,7 +19,6 @@ services:
       - FLASK_SERVER_PORT=9091
     volumes:
       - config:/config
-      - venv:/venv
     env_file:
       - ./.env
     labels:

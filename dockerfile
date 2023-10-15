@@ -4,10 +4,6 @@ FROM python:3.10-slim-bullseye
 WORKDIR /usr/src/app
 # Copy all files from the current directory to the container
 COPY . .
-# Create a virtual environment if it doesn't exist
-RUN if [ ! -d "/venv" ]; then python -m venv /venv; fi
-# Add the virtual environment bin to PATH
-ENV PATH="/venv/bin:$PATH"
 # Add the flask app index to env
 ENV FLASK_APP=index.py
 # Upgrade pip and install required Python packages
