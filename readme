@@ -3,3 +3,6 @@ Configuration:
  - modify config.json
  - chmod +x send_config.sh
  - ./send_config.sh
+
+Config Debug:
+ - Remove -d from makefile

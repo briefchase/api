@@ -29,4 +29,4 @@ compose-up:
 	sudo docker-compose -f docker-compose.yml up -d
 
 # All-in-one target to run everything
-run: check-docker install-compose compose-up
+docker: check-docker install-compose compose-up
