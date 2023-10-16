@@ -1,4 +1,4 @@
-name: Install & Compose Up
+name: Make Docker
 
 on:
   push:
