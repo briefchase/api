@@ -19,8 +19,9 @@
         <input type="text" class="hidden_textbox" id="input_textbox">
     </div>
     <script>
-        var ENV_URL = '{{ ENV_URL }}'; // This variable will hold the value passed from server
-        // Dynamically load your external JavaScript file
+        // Hold the values passed from server
+        var ENV_URL = '{{ ENV_URL }}';
+        // Dynamically load external JavaScript file
         var script = document.createElement('script');
         script.src = "{{ url_for('static', filename='script.js') }}";
         document.head.appendChild(script);
