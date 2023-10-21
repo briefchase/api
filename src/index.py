@@ -10,7 +10,7 @@ app = Flask(__name__)  # Create a Flask web server
 # Enable CORS for '/query' path; allows all origins to make requests
 cors = CORS(app, resources={r"/query": {"origins": "*"}})
 
-# HANDLERS:
+# ENDPOINTS:
 
 # Handler for the root URL
 @app.route('/')

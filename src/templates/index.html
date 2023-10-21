@@ -102,7 +102,7 @@
                 const data = await response.json();
                 respond(data.message);
             } catch (error) {
-                respond(error.constructor.name + ': ' + error.message);
+                respond(error.constructor.name + ': ' + error.message + '\n' + JSON.stringify(payload));
             }
         }
         // Function to display response
