@@ -14,7 +14,7 @@ cors = CORS(app, resources={r"/query": {"origins": "*"}})  # This will allow all
 @app.route('/')
 def index():
     if config != None: return render_template('index.html')
-    else: return "Not configured!"
+    else: return config
 
 # Used for setting the configuration details
 @app.route('/set_config', methods=["POST"])
