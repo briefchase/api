@@ -111,21 +111,29 @@
         const HEADERS = { 'Content-Type': 'application/json' };
         // Function to send fetch request and handle errors
         async function send(text) {
-            const url = '{{ ENV_URL }}';
+            const url = '{{ ENV_URL }}';  // Make sure this is the correct URL
             const payload = {
                 method: 'POST',
                 headers: HEADERS,
                 body: JSON.stringify({ message: text })
             };
+            let response;
             try {
-                const response = await fetch(url, payload);
+                response = await fetch(url, payload);
                 if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
                 return await response.json();
             } catch (error) {
-                return { error: `${error.constructor.name}: ${error.message}\n${JSON.stringify(payload)}` };
+                const errorObj = {
+                    error: `${error.constructor.name}: ${error.message}`,
+                    payload: JSON.stringify(payload),
+                };
+                if (response) {
+                    errorObj.responseStatus = `${response.status} ${response.statusText}`;
+                    errorObj.responseText = await response.text(); // fetch response body as text
+                }
+                return errorObj;
             }
         }
-
     </script>
 </body>
 
