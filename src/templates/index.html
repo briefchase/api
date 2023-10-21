@@ -91,9 +91,10 @@
 
         // Function to ask question
         async function ask(input) {
+            let payload;
             try {
                 const url = new URL('{{ ENV_URL }}');
-                const payload = {
+                payload = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ question: input })
@@ -105,6 +106,7 @@
                 respond(error.constructor.name + ': ' + error.message + '\n' + JSON.stringify(payload));
             }
         }
+
         // Function to display response
         function respond(text) {
             responsediv.innerHTML = '';
