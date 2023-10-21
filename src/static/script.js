@@ -45,7 +45,7 @@ function respond(text) {
 const HEADERS = { 'Content-Type': 'application/json' };
 // Function to send fetch request and handle errors
 async function send(text) {
-    const url = ENV_URL;
+    const url = ENV_URL; // Grabs from index template
     const payload = {
         method: 'POST',
         headers: HEADERS,
