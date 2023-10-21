@@ -78,17 +78,6 @@
             });
         }
 
-        async function ask(input) {
-            try {
-                const url = new URL('{EXTERNAL_URL}/query');
-                const response = await fetch(url);
-                const data = await response.json();
-                respond(data.message);
-            } catch (error) {
-                respond(error.constructor.name + ': ' + error.message);
-            }
-        }
-
         // Event listener to the hidden text box for input changes
         hiddentextbox.addEventListener('input', function() {
             // Update the content of the span with the text box value
@@ -105,6 +94,17 @@
                 ask(question)
             }
         });
+
+        async function ask(input) {
+            try {
+                const url = new URL('${window.location.origin}/query');
+                const response = await fetch(url);
+                const data = await response.json();
+                respond(data.message);
+            } catch (error) {
+                respond(error.constructor.name + ': ' + error.message);
+            }
+        }
     </script>
 </body>
 
