@@ -43,7 +43,12 @@ def configure():
 # Handler for query-related requests
 @app.route('/query', methods=['POST'])
 def query():
-    question = request.get_json()['question']
+    json_data = request.get_json()
+    if json_data is None:
+        return jsonify({"status": "error", "message": "Invalid JSON"}), 400
+    question = json_data.get('message')
+    if question is None:
+        return jsonify({"status": "error", "message": "Missing 'question' key"}), 400
     response = jsonify(message=ask_model(question))
     return response
 
