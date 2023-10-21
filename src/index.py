@@ -54,7 +54,7 @@ def query():
 # Function to get external URL
 def get_endpoint():
     default_url = 'env_not_found'
-    env_prefix = 'http://'
+    env_prefix = 'https://'
     # Get external URL from environment variable or use default
     url = env_prefix + os.environ.get('EXTERNAL_URL', default_url)
     return url
