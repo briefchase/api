@@ -62,9 +62,9 @@ def get_endpoint():
     url = env_prefix + os.environ.get('EXTERNAL_URL', default_url)
     return url
 # Function for asking questions
-def ask_model():
+def ask_model(inquiry):
     hi = "hi"  # Placeholder: to be implemented
-    return hi
+    return inquiry
 
 # Main execution starts here
 if __name__ == '__main__':
