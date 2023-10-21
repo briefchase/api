@@ -1,0 +1,45 @@
+/* Styling for container div */
+.input_container {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+}
+
+/* Styling for display div */
+.input_display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start; 
+    justify-content: flex-start;
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* Styling for the hidden textbox */
+.hidden_textbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+/* Cursor blink animation */
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Styling for cursor */
+#cursor_content {
+    font-weight: bold;
+    animation: blink 1s linear infinite;
+}

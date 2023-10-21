@@ -1,58 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Metadata information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hidden Text Box</title>
-    <style>
-        /* Styling for container div */
-        .input_container {
-            position: relative;
-            width: 100%;
-            padding: 8px; /* Space around the container */
-        }
-        
-        /* Styling for display div */
-        .input_display {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: flex-start; 
-            justify-content: flex-start; 
-            font-family: "Courier New", Courier, monospace;
-        }
-        
-        /* Styling for the hidden textbox */
-        .hidden_textbox {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0; /* Make it invisible */
-        }
-
-        /* Cursor blink animation */
-        @keyframes blink {
-            0%, 49% {
-                opacity: 1;
-            }
-            50%, 100% {
-                opacity: 0;
-            }
-        }
-        
-        /* Styling for cursor */
-        #cursor_content {
-            font-weight: bold;
-            animation: blink 1s linear infinite;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to external CSS file -->
 </head>
 
 <body>
@@ -65,76 +18,6 @@
         </div>
         <input type="text" class="hidden_textbox" id="input_textbox">
     </div>
-
-    <script>
-        // DOM element references
-        const responsediv = document.getElementById('response');
-        const inputcontent = document.getElementById('input_content');
-        const cursorcontent = document.getElementById('cursor_content');
-        const hiddentextbox = document.getElementById('input_textbox');
-        // Listener for hidden text box value changes
-        hiddentextbox.addEventListener('input', function() {
-            inputcontent.textContent = hiddentextbox.value;
-            cursorcontent.textContent = ' '.repeat(hiddentextbox.value.length) + "_";
-        });
-        // Listener for Enter key press
-        hiddentextbox.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                let question = hiddentextbox.value;
-                hiddentextbox.value = '';
-                inputcontent.textContent = '';
-                cursorcontent.textContent = '_';
-                ask(question);
-            }
-        });
-
-        
-        // Function to ask question
-        async function ask(input) {
-            const data = await send(input);
-            if (data.error) {
-                respond(data.error);
-            } else {
-                respond(data.message);
-            }
-        }
-        // Function to display response
-        function respond(text) {
-            responsediv.innerHTML = '';
-            const letters = text.split('');
-            letters.forEach((letter, index) => {
-                setTimeout(() => {
-                    responsediv.innerHTML = `${responsediv.innerHTML.slice(0, index)}${letter}${responsediv.innerHTML.slice(index + 1)}`;
-                }, index * 100);
-            });
-        }
-        const HEADERS = { 'Content-Type': 'application/json' };
-        // Function to send fetch request and handle errors
-        async function send(text) {
-            const url = '{{ ENV_URL }}';
-            const payload = {
-                method: 'POST',
-                headers: HEADERS,
-                body: JSON.stringify({ message: text })
-            };
-            let response;
-            try {
-                response = await fetch(url, payload);
-                if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
-                return await response.json();
-            } catch (error) {
-                const errorObj = {
-                    error: `${error.constructor.name}: ${error.message}`,
-                    payload: JSON.stringify(payload),
-                };
-                if (response) {
-                    errorObj.responseStatus = `${response.status} ${response.statusText}`;
-                    errorObj.responseText = await response.text(); // fetch response body as text
-                }
-                return errorObj;
-            }
-        }
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Link to external JS file -->
 </body>
-
 </html>
