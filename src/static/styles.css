@@ -1,12 +1,6 @@
-/* Styling for container div */
-.input_container {
-    position: relative;
-    width: 100%;
-    padding: 8px;
-}
 
 /* Styling for display div */
-.input_display {
+.display_label {
     position: absolute;
     top: 0;
     left: 0;
@@ -17,7 +11,12 @@
     justify-content: flex-start;
     font-family: "Courier New", Courier, monospace;
 }
-
+/* Styling for container */
+.input_container {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+}
 /* Styling for the hidden textbox */
 .hidden_textbox {
     position: absolute;
