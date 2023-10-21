@@ -1,8 +1,12 @@
-Configuration:
- - cp config.template.json config.json
- - modify config.json
- - chmod +x send_config.sh
- - ./send_config.sh
+Setup:
+ - Modify .env file if neccesary
+ - Setup VM and install Github Actions Runner (See Repo)
+ - Run workflow through github (See Repo) https://github.com/briefchase/api/actions
 
-Config Debug:
+Configuration:
+ - Make new configuration file: make config
+ - Send configuration to server: make send_config
+ - Modify configuration endpoint in makefile if neccesary
+
+Debug:
  - Remove -d from makefile

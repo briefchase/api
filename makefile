@@ -31,14 +31,16 @@ compose-up:
 # All-in-one target to run everything
 docker: check-docker install-compose compose-up
 
-# Send config.json to server
+# Make a new configuration file
 config:
 	# Copy config template file
 	cp config.template.json config.json
 
+URL_PREFIX = https://
+URL_SUFFIX = /set_config
 # Send config.json to server
 send_config:
-	# Extract EXTERNAL_URL from .env file
-	EXTERNAL_URL=$(awk -F'[:," ]+' '/"EXTERNAL_URL"/ {for(i=1;i<=NF;i++) if($i=="EXTERNAL_URL") print $(i+2); exit}' .env)
-	# Send config.json via HTTPS POST to the extracted URL
-	curl -X POST -H "Content-Type: application/json" -d @config.json $EXTERNAL_URL
+	@EXTERNAL_URL=$$(awk -F '=' '/EXTERNAL_URL/ {print $$2}' .env); \
+	FULL_URL=$$(echo "$(URL_PREFIX)$$EXTERNAL_URL$(URL_SUFFIX)"); \
+	echo "Captured URL: $$FULL_URL"; \
+	curl -k -L -X POST -H "Content-Type: application/json" -d @config.json $$FULL_URL
