@@ -91,7 +91,7 @@
         
         // Function to ask question
         async function ask(input) {
-            const data = await send(text);
+            const data = await send(input);
             if (data.error) {
                 respond(data.error);
             } else {
