@@ -14,11 +14,13 @@ cors = CORS(app, resources={r"/query": {"origins": "*"}})  # This will allow all
 @app.route('/')
 def index():
     if config != None: return render_template('index.html')
-    else: return config
+    else: return "not_configured"
 
 # Used for setting the configuration details
 @app.route('/set_config', methods=["POST"])
 def configure():
+    # Use the global configuration variable
+    global config
     # Load the template JSON structure for comparison
     with open("config.template.json", "r") as f:
         template_structure = json.load(f)
