@@ -5,19 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hidden Text Box</title>
+    <!-- Metadata information -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to external CSS file -->
 </head>
 
 <body>
-    <!-- Where the response will be displayed -->
-    <div id="response" class="display_label"></div>
-    <!-- Input area -->
-    <div class="input_container">
-        <div class="display_label">
-            <span id="input_content"></span><span id="cursor_content">_</span>
+    
+    <!-- Console HTML -->
+    <div class="console_container">
+        <!-- Where the console will be displayed -->
+        <div id="response_container" class="display_container">
+            <div id="response_content"></div>
         </div>
-        <input type="text" class="hidden_textbox" id="input_textbox">
+        <div id="input_container" class="display_container">
+            <span id="input_content"></span>
+            <span id="cursor_content">_</span>
+        </div>
+        <!-- Display controller -->
+        <input type="text" id="input_controller">
     </div>
+     <!-- Console JS -->
     <script>
         // Hold the values passed from server
         var ENV_URL = '{{ ENV_URL }}';
