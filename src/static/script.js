@@ -3,7 +3,7 @@
 const responseDisplayContent = document.getElementById('response_content');
 const inputDisplayContent = document.getElementById('input_content');
 const cursorDisplayContent = document.getElementById('cursor_content');
-const textboxController = document.getElementById('input_textbox');
+const textboxController = document.getElementById('input_controller');
 
 /* LISTENERS */
 
