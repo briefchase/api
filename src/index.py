@@ -19,7 +19,7 @@ def index():
         # Get the external URL endpoint for '/query'
         ask_url = get_endpoint() + '/query'
         # Render HTML template and append debug message
-        return render_template('index.html', ENV_URL=ask_url)
+        return render_template('index.html', ASK_ENDPOINT=ask_url)
     else:
         # Return message if config is not set
         return "not configured"

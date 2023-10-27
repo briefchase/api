@@ -1,28 +1,33 @@
-// DOM element references
-const responsediv = document.getElementById('response');
-const inputcontent = document.getElementById('input_content');
-const cursorcontent = document.getElementById('cursor_content');
-const hiddentextbox = document.getElementById('input_textbox');
+/* DOM REFERENCES */
 
-// Listener for hidden text box value changes
-hiddentextbox.addEventListener('input', function() {
-    inputcontent.textContent = hiddentextbox.value;
-    cursorcontent.textContent = ' '.repeat(hiddentextbox.value.length) + "_";
+const responseDisplayContent = document.getElementById('response_content');
+const inputDisplayContent = document.getElementById('input_content');
+const cursorDisplayContent = document.getElementById('cursor_content');
+const textboxController = document.getElementById('input_textbox');
+
+/* LISTENERS */
+
+// Secret text box value changes
+textboxController.addEventListener('input', function() {
+    inputDisplayContent.textContent = textboxController.value;
+    cursorDisplayContent.textContent = ' '.repeat(textboxController.value.length) + "_";
 });
-
-// Listener for Enter key press
-hiddentextbox.addEventListener('keypress', function(event) {
+// Enter key press
+textboxController.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
-        let question = hiddentextbox.value;
-        hiddentextbox.value = '';
-        inputcontent.textContent = '';
-        cursorcontent.textContent = '_';
+        let question = textboxController.value;
+        textboxController.value = '';
+        inputDisplayContent.textContent = '';
+        cursorDisplayContent.textContent = '_';
         ask(question);
     }
 });
 
-// Function to ask question
+/* HELPERS */
+
+// Sends a message from the console
 async function ask(input) {
+    const url = ASK_ENDPOINT; // Grabs from index template
     const data = await send(input);
     if (data.error) {
         respond(data.error);
@@ -30,22 +35,22 @@ async function ask(input) {
         respond(data.message);
     }
 }
-
-// Function to display response
+// Displays the response
 function respond(text) {
-    responsediv.innerHTML = '';
+    responseDisplayContent.innerHTML = '';
     const letters = text.split('');
     letters.forEach((letter, index) => {
         setTimeout(() => {
-            responsediv.innerHTML = `${responsediv.innerHTML.slice(0, index)}${letter}${responsediv.innerHTML.slice(index + 1)}`;
+            responseDisplayContent.innerHTML = `${responseDisplayContent.innerHTML.slice(0, index)}${letter}${responseDisplayContent.innerHTML.slice(index + 1)}`;
         }, index * 100);
     });
 }
 
+/* UTILITIES */
+
+// Posts a text message to a specific endpoint in JSON format
 const HEADERS = { 'Content-Type': 'application/json' };
-// Function to send fetch request and handle errors
-async function send(text) {
-    const url = ENV_URL; // Grabs from index template
+async function send(text, endpoint) {
     const payload = {
         method: 'POST',
         headers: HEADERS,
@@ -53,7 +58,7 @@ async function send(text) {
     };
     let response;
     try {
-        response = await fetch(url, payload);
+        response = await fetch(endpoint, payload);
         if (!response.ok) throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
         return await response.json();
     } catch (error) {
