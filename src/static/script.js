@@ -27,7 +27,7 @@ textboxController.addEventListener('keypress', function(event) {
 
 // Sends a message from the console
 async function ask(input) {
-    const data = await send(input, ASK_ENDPOINT);
+    const data = await send(input, ask_url);
     if (data.error) {
         respond(data.error);
     } else {

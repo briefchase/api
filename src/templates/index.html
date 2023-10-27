@@ -27,7 +27,7 @@
      <!-- Console JS -->
     <script>
         // Hold the values passed from server
-        var ENV_URL = '{{ ENV_URL }}';
+        var ask_url = '{{ ASK_ENDPOINT }}';
         // Dynamically load external JavaScript file
         var script = document.createElement('script');
         script.src = "{{ url_for('static', filename='script.js') }}";
