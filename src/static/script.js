@@ -11,7 +11,6 @@ const textboxController = document.getElementById('input_controller');
 textboxController.addEventListener('input', function() {
     inputDisplayContent.textContent = textboxController.value;
     cursorDisplayContent.textContent = ' '.repeat(textboxController.value.length) + "_";
-    window.alert("change"); //DEBUG
 });
 // Enter key press
 textboxController.addEventListener('keypress', function(event) {
