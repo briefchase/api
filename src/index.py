@@ -6,6 +6,7 @@ import os
 
 # Initialize variables
 config = None  # Global config variable to store configuration settings
+chat = [{"role": "system", "content": "You (your name is console) are a bash console and you are interfacing with someone with the name of user. you must respond only how a bash terminal would respond"}] # Global variable to store chat
 app = Flask(__name__)  # Create a Flask web server
 # Enable CORS for '/query' path; allows all origins to make requests
 cors = CORS(app, resources={r"/query": {"origins": "*"}})
@@ -25,7 +26,7 @@ def index():
         return "not configured"
 # Handler for setting up configuration
 @app.route('/set_config', methods=["POST"])
-def configure():
+def set_config():
     global config  # Refer to the global config variable
     # Load the template JSON to check structure
     with open("config.template.json", "r") as f:
@@ -37,6 +38,7 @@ def configure():
     # Validate JSON keys against template
     if set(content.keys()) == set(template_structure.keys()):
         config = content
+        configure()
         return jsonify({"status": "success", "message": "JSON structure matches the template and is saved"})
     else:
         return jsonify({"status": "error", "message": "JSON structure does not match the template"}), 400
@@ -54,7 +56,11 @@ def query():
 
 # UTILITIES:
 
-# Function to get external URL
+# Intitialize (use) config variables
+def configure():
+    global config
+    openai.api_key = config.get("OPENAIKEY", "openaikey_not_found")
+# Function to get external URL from env
 def get_endpoint():
     default_url = 'env_not_found'
     env_prefix = 'https://'
@@ -63,8 +69,15 @@ def get_endpoint():
     return url
 # Function for asking questions
 def ask_model(inquiry):
-    hi = "hi"  # Placeholder: to be implemented
-    return inquiry
+    global chat
+    append_message("user", inquiry)
+    completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=chat)
+    reply = completion.choices[0].message
+    return reply
+# Add a particular message to the stored chat
+def append_message(role, message):
+    global chat
+    chat.append({"role": role, "content": message})
 
 # Main execution starts here
 if __name__ == '__main__':
