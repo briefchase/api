@@ -10,3 +10,5 @@ Configuration:
 
 Debug:
  - Remove -d from makefile
+
+Architecture: Actions(Docker(Traefik & Flask))
