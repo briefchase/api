@@ -71,10 +71,6 @@ def log_output():
 
 # UTILITIES:
 
-# Intitialize (use) config variables
-def configure():
-    global config
-    openai.api_key = config.get("OPENAIKEY", "openaikey_not_found")
 
 # Function to get external URL from env
 def get_endpoint():
@@ -90,7 +86,7 @@ def ask_model(inquiry):
     append_message("user", inquiry)
     completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=chat)
     reply = completion.choices[0].message
-    app.logger.info(reply)  # Log output using Flask's logger
+    log(reply)
     return reply
 
 # Add a particular message to the stored chat
@@ -98,6 +94,13 @@ def append_message(role, message):
     global chat
     chat.append({"role": role, "content": message})
 
+# Intitialize (use) config variables
+def configure():
+    global config
+    openai.api_key = config.get("OPENAIKEY", "openaikey_not_found")
+# Log a message to /log
+def log(msg):
+    app.logger.info("\n" + msg)  # Log output using Flask's logger
 # Main execution starts here
 if __name__ == '__main__':
     app.run(debug=True)
