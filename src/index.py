@@ -100,7 +100,7 @@ def configure():
     openai.api_key = config.get("OPENAIKEY", "openaikey_not_found")
 # Log a message to /log
 def log(msg):
-    app.logger.info("\n" + msg)  # Log output using Flask's logger
+    app.logger.info("\n\n" + msg)  # Log output using Flask's logger
 # Main execution starts here
 if __name__ == '__main__':
     app.run(debug=True)
