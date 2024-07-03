@@ -7,6 +7,7 @@ import logging
 from io import StringIO
 
 # Initialize variables
+bot = openai.OpenAI()
 config = None  # Global config variable to store configuration settings
 chat = [{"role": "system", "content": "You (your name is console) are a bash console and you are interfacing with someone with the name of user. you must respond only how a bash terminal would respond"}]  # Global variable to store chat
 app = Flask(__name__)  # Create a Flask web server
@@ -83,10 +84,11 @@ def get_endpoint():
 # Function for asking questions
 def ask_model(inquiry):
     global chat
+    global client
     append_message("user", inquiry)
-    completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=chat)
+    completion = openai.chat.completions.create(model="gpt-3.5-turbo", messages=chat)
     reply = completion.choices[0].message
-    log(reply)
+    log("=================="+reply+"==================")
     return reply
 
 # Add a particular message to the stored chat
